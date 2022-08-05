@@ -1,0 +1,145 @@
+<openerp>
+  <data>
+
+    <!-- libra.entidad -->
+
+    <record model="ir.ui.view" id="libra_entidad_tree">
+      <field name="name">Entidad</field>
+      <field name="model">libra.entidad</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="company_id" groups="base.group_erp_manager"/>
+          <field name="users_ids" widget="many2many_tags"/>
+          <field name="journal_disponibles_ids" widget="many2many_tags" />
+        </tree>
+      </field>
+    </record>
+
+    
+    <record id="libra_entidad_form" model="ir.ui.view">
+      <field name="name">libra Entidad form</field>
+      <field name="model">libra.entidad</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <div class="oe_title">
+                <label for="name" class="oe_edit_only"/>
+                <h1>
+                  <field name="name" class="oe_inline" placeholder="Entidad Global Inc. 2"/>
+                </h1>
+              </div>
+            </group>
+            <group>
+              <group>
+                <field name="company_id" groups="base.group_erp_manager"/>
+                <field name="type" required="1"/>
+              </group>
+              <group>
+              </group>
+            </group>
+            <notebook>
+              <page string="Informacion General">
+                <group>
+                  <group>
+                    <field name="users_ids" widget="many2many_tags" required="1" />
+                    <field name="journal_disponibles_ids" widget="many2many_tags" />
+                    <label for="street" string="Address"/>
+                    <div class="o_address_format">
+                        <field name="street" placeholder="Street..." class="o_address_street"/>
+                        <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                        <field name="city" placeholder="City" class="o_address_city"/>
+                        <field name="state_id" class="o_address_state" placeholder="State" options="{&quot;no_open&quot;: True}" /> <!-- on_change="onchange_state(state_id)" -->
+                        <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                        <field name="country_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True}" /> <!-- on_change="on_change_country(country_id)" -->
+                     </div>
+                  </group>
+                  <group>
+                    <field name="phone"/>
+                    <field name="fax"/>
+                    <field name="email"/>
+                  </group>
+                </group>
+              </page>
+              <page string="Facturacion">
+								<group string="Facturacion de intereses">
+									<field name="journal_invoice_electronic_id" required="0"/>
+									<field name="journal_invoice_id" required="0"/>
+                  <!-- Productos -->
+									<field name="product_interes_id"/>
+									<field name="product_punitorio_id"/>
+									<field name="product_seguro_id"/>
+									<field name="product_ajuste_id"/>
+									<field name="product_refinanciacion_id"/>
+								</group>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- Entidades -->
+    <record model="ir.actions.act_window" id="libra_sucursal_action">
+      <field name="name">Entidades</field>
+      <field name="res_model">libra.entidad</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_ids" eval="[(5, 0, 0), 
+        (0, 0, {'view_mode': 'tree', 'view_id': ref('libra_entidad_tree')}),
+        (0, 0, {'view_mode': 'form', 'view_id': ref('libra_entidad_form')})]
+        "/>
+    </record>
+
+    <menuitem name="Entidades" id="menu_sucursales" web_icon="libra_base,static/description/entidad.png" groups="libra_base.manager"/>
+
+    <menuitem name="Entidades" id="menu_sucursales_action" parent="menu_sucursales" 
+      action="libra_sucursal_action"/>
+
+
+    <!-- Vista Form Res Users -->
+
+    <!-- <record id="res_users_form_inherited"  model="ir.ui.view">
+      <field name="name">Extension User form</field>
+      <field name="model">res.users</field>
+      <field name="inherit_id" ref="base.view_users_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='action_id']" position="after">
+          <field name="entidad_login_id" readonly="1"/>
+        </xpath>
+      </field>
+    </record> -->
+
+
+    <!-- Vista Form Res Users / Preference wizard -->
+
+    <!-- <record id="res_users_preference_form_inherited"  model="ir.ui.view">
+      <field name="name">Extension User/Preference form</field>
+      <field name="model">res.users</field>
+      <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
+      <field name="arch" type="xml">
+        <xpath expr="//group[@name='preferences']" position="after">
+          <group>
+            <group>
+							<field name="entidad_login_id" required="0" options="{'no_quick_create':True,'no_create_edit':True, 'no_open':True}"/>
+							<field name="token" readonly="1"/>
+							<separator col="1"/>
+							<div groups="libra_base.manager">
+								<button name="button_get_token" string="Generar Token" type="object" confirm="Confirma la accion?"/>
+								<button name="button_delete_token" string="Borrar Token" type="object" confirm="Confirma la accion?"/>
+								<button name="button_refresh_token" string="Actualizar Token" type="object" confirm="Confirma la accion?"/>
+							</div>
+            </group>
+            <group>
+							<field name="entidad_ids" widget="many2many_tags" readonly="1"/>
+            </group>
+          </group>
+				</xpath>
+				<xpath expr="//field[@name='email']" position="attributes">
+          <attribute name="readonly">1</attribute>
+        </xpath>
+      </field>
+		</record> -->
+
+  </data>
+</openerp>

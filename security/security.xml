@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <!-- <data noupdate="0"> -->
+		<record id="entidad_comp_rule1" model="ir.rule">
+			<field name="name">Entidad Line multi-company</field>
+			<field name="model_id" ref="model_libra_entidad"/>
+			<field eval="True" name="global"/>
+			<field name="domain_force">[('users_ids','=', user.id)]</field>
+		</record>
+
+		<!-- <record id="journal_comp_rule1" model="ir.rule">
+			<field name="name">Journal segun entidad Line multi-company</field>
+			<field name="model_id" ref="model_account_journal"/>
+			<field eval="True" name="global"/>
+			<field name="domain_force">[('users_ids','=', user.id)]</field>
+		</record> -->
+			
+		<!-- <record id="mail_mail_rule" model="ir.rule">
+			<field name="name">Mail multi-company</field>
+			<field name="model_id" ref="model_mail_mail"/>
+			<field eval="True" name="global"/>
+			<field name="domain_force">[('company_id','child_of',[user.company_id.id])]</field>
+		</record>
+
+		<record id="res_partner_contacto_rule" model="ir.rule">
+			<field name="name">Contacto del cliente Line multi-company</field>
+			<field name="model_id" ref="model_res_partner_contacto"/>
+			<field eval="True" name="global"/>
+			<field name="domain_force">['|', ('company_id','=',False), ('company_id','child_of',[user.company_id.id])]</field>
+		</record>
+
+		<record id="ir_mail_server_rule" model="ir.rule">
+			<field name="name">Mail Saliente multi-company</field>
+			<field name="model_id" ref="model_ir_mail_server"/>
+			<field eval="True" name="global"/>
+			<field name="domain_force">[('company_id','child_of',[user.company_id.id])]</field>
+		</record> -->
+    <!-- </data>  -->
+</openerp>

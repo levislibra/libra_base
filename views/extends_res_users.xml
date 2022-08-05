@@ -1,0 +1,43 @@
+<openerp>
+  <data>
+    <!-- Vista Form Res Users -->
+
+    <record id="res_users_form_inherited"  model="ir.ui.view">
+      <field name="name">Extension User form</field>
+      <field name="model">res.users</field>
+      <field name="inherit_id" ref="base.view_users_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='company_id']" position="after">
+          <field name="entidad_ids" widget="many2many_tags" readonly="1"/>
+          <field name="entidad_login_id" options="{'no_quick_create':True,'no_create_edit':True, 'no_open':True}"/>
+        </xpath>
+      </field>
+    </record>
+
+
+    <!-- Vista Form Res Users / Preference wizard -->
+
+    <record id="res_users_preference_form_inherited"  model="ir.ui.view">
+      <field name="name">Extension User/Preference form</field>
+      <field name="model">res.users</field>
+      <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
+      <field name="arch" type="xml">
+        <xpath expr="//group[@name='preferences']" position="before">
+          <group>
+            <group>
+              <field name="entidad_login_id" required="0" options="{'no_quick_create':True,'no_create_edit':True, 'no_open':True}"/>
+            </group>
+            <group>
+              <field name="entidad_ids" widget="many2many_tags" readonly="1"/>
+              <field name="journal_ids" widget="many2many_tags" readonly="0"/>
+            </group>
+          </group>
+        </xpath>
+        <!-- <xpath expr="//field[@name='email']" position="attributes">
+          <attribute name="readonly">1</attribute>
+        </xpath> -->
+      </field>
+    </record>
+
+  </data>
+</openerp>
